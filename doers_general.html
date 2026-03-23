@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic page setup -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Estimate | DOERS GC</title>
+
+  <style>
+    /* Makes padding and borders count inside element width/height */
+    * { box-sizing: border-box; }
+
+    /* Page background and default font */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #EDE8D0;
+    }
+
+    /* Hero section with dark overlay on top of background image */
+    .hero {
+      background:
+        linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+        url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Wrapper for logo inside hero */
+    .logo {
+      margin: 0 auto;
+    }
+
+    /* Keeps logo responsive and centered */
+    .logo img {
+      max-width: 90%;
+      max-height: 200px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Main white form card */
+    .container {
+      max-width: 480px;
+      background: #fff;
+      margin: -40px auto 40px;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    }
+
+    /* Hidden by default, used for form submission messages */
+    .status {
+      display: none;
+      margin-bottom: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    /* Success message styling */
+    .status.success {
+      display: block;
+      background: #eaf7ed;
+      color: #166534;
+    }
+
+    /* Error message styling */
+    .status.error {
+      display: block;
+      background: #fdecec;
+      color: #991b1b;
+    }
+
+    /* Form labels */
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+
+    /* Inputs, dropdown, and textarea all share the same look */
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font: inherit;
+    }
+
+    /* Lets project details box grow vertically */
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    /* Main call-to-action button */
+    button {
+      width: 100%;
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 16px;
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    /* Button hover color */
+    button:hover {
+      background: #EDE8D0;
+      color: #000;
+    }
+
+    /* Disabled state while form is submitting */
+    button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    /* Footer wrapper */
+    footer {
+      text-align: center;
+      font-size: 14px;
+      padding: 10px 20px 30px;
+    }
+
+    /* Keeps footer links clean */
+    footer a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Small trust text under form */
+    .trust {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    /* Small helper text under photo upload field */
+    .help-text {
+      font-size: 12px;
+      color: #666;
+      margin-top: 6px;
+    }
+
+    /* Hidden spam trap field for bots */
+    .hidden-field {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Footer icon row */
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    /* Each icon + label block */
+    .contact-item {
+      text-align: center;
+      min-width: 70px;
+    }
+
+    /* Keeps clickable area neat */
+    .contact-item a {
+      display: inline-block;
+    }
+
+    /* Contact icons */
+    .contact-item img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 8px;
+      opacity: 0.9;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    /* Hover effect for icons */
+    .contact-item img:hover {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+
+    /* Text under each contact icon */
+    .contact-item span {
+      display: block;
+      font-size: 12px;
+      color: #333;
+      line-height: 1.3;
+    }
+
+    /* Tablet/mobile adjustments */
+    @media (max-width: 520px) {
+      .hero {
+        height: 260px;
+      }
+
+      .logo img {
+        max-height: 160px;
+      }
+
+      .contact-grid {
+        gap: 18px;
+      }
+
+      .contact-item img {
+        width: 22px;
+        height: 22px;
+      }
+
+      .contact-item span {
+        font-size: 11px;
+      }
+    }
+
+    /* Extra-small phone spacing improvements */
+    @media (max-width: 480px) {
+      .container {
+        margin: -30px 12px 30px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top hero/banner section with company logo -->
+  <section class="hero">
+    <div class="logo">
+      <img src="images/doers_logo_transparent.png" alt="DOERS General Contracting LLC logo">
+    </div>
+  </section>
+
+  <!-- Main form card -->
+  <div class="container">
+    <!-- Success/error messages appear here after form submission -->
+    <div id="formStatus" class="status" aria-live="polite"></div>
+
+    <!-- Formspree-connected estimate form -->
+    <form
+      id="estimateForm"
+      action="https://formspree.io/f/maqpgdej"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <!-- Custom email subject line for submissions -->
+      <input type="hidden" name="_subject" value="New Estimate Request - DOERS GP">
+
+      <!-- Tells Formspree not to show its own captcha -->
+      <input type="hidden" name="_captcha" value="false">
+
+      <!-- Hidden bot trap field; real users should never fill this -->
+      <div class="hidden-field" aria-hidden="true">
+        <label for="company">Company</label>
+        <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+      </div>
+
+      <!-- Customer full name -->
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <!-- Customer phone number -->
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <!-- Customer email -->
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email">
+
+      <!-- Service dropdown -->
+      <label for="service">Type of Work</label>
+      <select id="service" name="service" required>
+        <option value="" disabled selected>Select a service</option>
+        <option>Roofing</option>
+        <option>Siding</option>
+        <option>Fencing</option>
+        <option>Concrete</option>
+        <option>Drywall</option>
+        <option>Interior Painting</option>
+        <option>Exterior Painting</option>
+        <option>Remodel / Renovation</option>
+        <option>Landscaping</option>
+        <option>Repairs / Handyman</option>
+      </select>
+
+      <!-- Optional photo upload -->
+      <label for="photos">Upload Photos (optional)</label>
+      <input type="file" id="photos" name="photos" accept="image/*" multiple>
+
+      <!-- Extra project details -->
+      <label for="details">Project Details</label>
+      <textarea id="details" name="details"></textarea>
+
+      <!-- Submit button -->
+      <button type="submit" id="submitButton">Get My Free Estimate</button>
+    </form>
+
+    <!-- Trust note under form -->
+    <div class="trust">No spam. We only contact you about your project.</div>
+  </div>
+
+  <!-- Footer contact icons -->
+  <footer>
+    <div class="contact-grid">
+      <!-- Phone icon -->
+      <div class="contact-item">
+        <a href="tel:19726971770">
+          <img src="images/phone-icon.png" alt="Phone">
+        </a>
+        <span>Call Us</span>
+      </div>
+
+      <!-- David email icon -->
+      <div class="contact-item">
+        <a href="mailto:David@doersgp.com">
+          <img src="images/email-icon.png" alt="Email David">
+        </a>
+        <span>David</span>
+      </div>
+
+      <!-- Josh email icon -->
+      <div class="contact-item">
+        <a href="mailto:Josh@doersgp.com">
+          <img src="images/email-icon.png" alt="Email Josh">
+        </a>
+        <span>Josh</span>
+      </div>
+
+      <!-- Instagram icon -->
+      <div class="contact-item">
+        <a href="https://instagram.com/doers_gc" target="_blank" rel="noopener noreferrer">
+          <img src="images/instagram-icon.png" alt="Instagram">
+        </a>
+        <span>Instagram</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Grab the main elements we need for form behavior
+    const form = document.getElementById("estimateForm");
+    const statusBox = document.getElementById("formStatus");
+    const submitButton = document.getElementById("submitButton");
+
+    // Shows a success or error message to the user
+    function showStatus(message, type) {
+      statusBox.className = "status " + type;
+      statusBox.textContent = message;
+    }
+
+    // Clears any old messages before a new submission
+    function clearStatus() {
+      statusBox.className = "status";
+      statusBox.textContent = "";
+    }
+
+    // Handles form submission without leaving the page
+    form.addEventListener("submit", async function (e) {
+      // Prevents normal page reload submit
+      e.preventDefault();
+
+      // Clears old status message
+      clearStatus();
+
+      // Checks hidden spam trap
+      const honeypot = document.getElementById("company");
+      if (honeypot.value.trim() !== "") {
+        showStatus("Submission blocked.", "error");
+        return;
+      }
+
+      // Disables button while form sends
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+
+      try {
+        // Sends form data to Formspree
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: {
+            Accept: "application/json"
+          }
+        });
+
+        // If submission worked
+        if (response.ok) {
+          form.reset();
+          showStatus("Thanks! Your estimate request has been sent successfully.", "success");
+        } else {
+          // If Formspree returned an error message
+          const data = await response.json().catch(() => ({}));
+          const message =
+            data && data.errors
+              ? data.errors.map(err => err.message).join(", ")
+              : "Something went wrong. Please try again.";
+          showStatus(message, "error");
+        }
+      } catch (error) {
+        // If the network request itself fails
+        showStatus("Network error. Please check your connection and try again.", "error");
+      } finally {
+        // Re-enable button whether request succeeds or fails
+        submitButton.disabled = false;
+        submitButton.textContent = "Get My Free Estimate";
+      }
+    });
+  </script>
+
+</body>
+</html>
